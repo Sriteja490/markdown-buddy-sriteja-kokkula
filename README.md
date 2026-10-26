@@ -1,7 +1,6 @@
 > **AI Assistance Declaration:** I used ChatGPT (GPT-6, 2026-10-26) to assist with the README structure, R Markdown formatting, documentation wording, reflection drafts, and an example R script. My prompts and key responses are recorded in `AI_Prompts_Appendix.md`. I verified the R Markdown formatting by knitting the document in RStudio, executed the R script, and independently checked six summary results in Google Sheets using AVERAGEIF, SUMIF, and COUNTIF. I also manually compared sessions S01 and S12 against the original CSV. All calculations were independently checked by me. I am responsible for the accuracy and originality of my final submission..**
 >
-> **Draft status:** This is an AI-assisted starting document. The bracketed verification statements above must be completed truthfully by the student before submission. Do not claim a check was performed unless you did it.
-
+> **Verification status:** Successfully knitted the R Markdown document into HTML in RStudio, executed the R script, independently verified six summary calculations in Google Sheets, and manually compared sessions S01 and S12 with the original CSV. All checks matched. GitHub documentation review is in progress.
 # Synthetic Study Sessions — R Project Documentation
 
 **BDA400 | Data Science Tools and Techniques | Assignment 1 — Markdown Buddy**  
