@@ -1,0 +1,110 @@
+---
+title: "Documentation of an R Script: Synthetic Study Sessions"
+subtitle: "BDA400 Assignment 1 — Markdown Buddy"
+author: "Sriteja Kokkula (664429563)"
+date: "2026-10-26"
+output:
+  html_document:
+    toc: true
+    toc_depth: 2
+---
+
+> **AI Assistance Declaration: I used ChatGPT (GPT-6, 2026-10-26) for README and R Markdown layout, documentation wording, and an initial example-script scaffold. Prompts used: "this is another assignment can you please complete this assignment as per requirements"; the BDA400 Assignment 1 instruction prompts are reproduced and labeled in AI_Prompts_Appendix.md. I verified outputs using [STUDENT TO COMPLETE after GitHub Preview, RStudio Knit, Sheets calculations, independent cross-check, and manual spot-check]. All final calculations are done by myself [STUDENT TO CONFIRM AFTER PERSONAL VERIFICATION]. I am responsible for the accuracy and originality of this work.**
+>
+> **Verification pending:** This is an AI-assisted draft. All included R code is shown for explanation (`eval = FALSE`); knitting does **not** execute the analysis. The student must independently run, review and validate the script, then complete the declaration.
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, eval = FALSE)
+```
+
+# Purpose
+
+This R Markdown document explains `R/study_summary.R`, a demonstration script that analyzes **entirely synthetic** study-session records. Its purpose is to communicate what the script expects, how it processes records, and what files it is designed to create. It is not a report of observed people or confirmed numerical results.
+
+# Inputs
+
+The script reads `data/synthetic_study_sessions.csv` relative to the project root.
+
+| Input field | Example format | Validation expectation |
+|---|---|---|
+| `session_id` | `S01` | Non-missing synthetic label |
+| `cohort` | `A` or `B` | Fictional grouping label |
+| `study_minutes` | `30` | Non-negative numeric |
+| `completed_tasks` | `2` | Non-negative whole number |
+| `focus_score` | `3` | Numeric value from 1 to 5 |
+
+No external datasets, APIs, or identifiable records are used.
+
+# Script workflow
+
+## 1. Locate and read the file
+
+The relative path makes the repository easy to use if the R session starts in its root directory.
+
+```{r example-read, eval=FALSE}
+input_path <- file.path("data", "synthetic_study_sessions.csv")
+sessions <- read.csv(input_path, stringsAsFactors = FALSE)
+```
+
+## 2. Check the input schema
+
+The script confirms that the expected columns are present, there are no missing required values, and numeric fields have permitted values. An invalid file should cause a descriptive error instead of being silently summarized.
+
+```{r example-checks, eval=FALSE}
+required_cols <- c("session_id", "cohort", "study_minutes",
+                   "completed_tasks", "focus_score")
+stopifnot(all(required_cols %in% names(sessions)))
+```
+
+**Note:** This short block illustrates documentation formatting. Full checks are in `R/study_summary.R`, which the student must personally inspect and validate.
+
+## 3. Describe each synthetic cohort
+
+The script uses base R `aggregate()` to propose a grouped mean duration, total completed tasks, and the number of sessions. No numerical results are displayed in this document because the assignment requires the student to perform and verify all calculations independently.
+
+```{r example-summarise, eval=FALSE}
+mean_minutes <- aggregate(study_minutes ~ cohort,
+                          data = sessions, FUN = mean)
+total_tasks <- aggregate(completed_tasks ~ cohort,
+                         data = sessions, FUN = sum)
+```
+
+## 4. Write the summary and chart
+
+After the student executes the checked script, it is designed to place its output in `outputs/`. The output path is excluded from Git using `.gitignore`, keeping the documentation repository focused.
+
+```{r example-output, eval=FALSE}
+write.csv(summary_by_cohort,
+          "outputs/summary_by_cohort.csv", row.names = FALSE)
+```
+
+The base R chart should depict mean duration for synthetic cohort A and cohort B. The chart is illustrative and does not support claims about real students.
+
+# Outputs
+
+| File | Description | Validation status |
+|---|---|---|
+| `outputs/summary_by_cohort.csv` | Cohort summaries (mean minutes, tasks, session count) | **Student must generate and cross-check** |
+| `outputs/mean_study_minutes.png` | Bar chart of cohort mean study minutes | **Student must generate and inspect** |
+
+# How to run and preview
+
+1. Install the R Markdown packages in RStudio (`install.packages(c("rmarkdown", "knitr"))`).
+2. Open this `.Rmd` and click **Knit** to view a formatted HTML explanation.
+3. In a separate RStudio Console at the repository root, review and run `source("R/study_summary.R")`.
+4. Open the resulting CSV and PNG. **Do not claim accuracy without checking them.**
+
+# Verification and limitations
+
+Use the provided `Verification_Log.md` to record real observations after testing:
+
+- **Primary calculation in Sheets:** import the synthetic CSV and use Sheets `AVERAGEIF`, `SUMIF`, and `COUNTIF` formulas by cohort.
+- **Independent cross-check:** use `SUM/COUNT` on a manually filtered subset or hand-calculated totals.
+- **Spot-check:** compare one cohort, a few source records, and the produced output row.
+- **Formatting:** verify the knitted headings, tables and code blocks in RStudio; verify README rendering in GitHub Preview.
+
+Until those checks are done, this document describes **intended behavior**, not verified success.
+
+# Ethical use of AI
+
+ChatGPT helped draft documentation structure and a transparent script scaffold. The dataset contains synthetic records only. Final code ownership, validation evidence, actual calculations, and any corrections belong to the student. Exact recorded and example prompts are in `AI_Prompts_Appendix.md`.
